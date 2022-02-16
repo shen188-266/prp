@@ -1,0 +1,14 @@
+Problem
+1.Psall_ri Pshrl_ri Psarl_ri Pshld_ri  Prolw_ri Prorl_ri     (need encode_ofs_u8 (Int.intval imm)
+2.Pcmov Psetcc  Pjcc_rel   (need testcond2u4)
+3.Pjmp_l_rel  Pjcc_rel       (  need Z2u32)
+4.Pjmp_r  Pcall_r    ( don't know how to use sg)
+5.Pret_iw      ( need define encode_ofs_u16)
+6.
+ | Asm.Pimull_ri rd imm =>
+     do rdbits <- encode_ireg_u3 rd;
+     do imm32 <- encode_ofs_u32 (Int.intval imm);
+     OK (Pimull_ri rdbits rdbits imm32)
+  | Asm.Pxorps_f rd =>
+     do rdbits <- encode_freg_u3 rd;
+     OK (Pxorps_f rdbits rdbits)                                       (one to two)

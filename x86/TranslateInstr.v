@@ -878,16 +878,16 @@ Definition translate_instr (ofs: Z) (i:instruction) : res Instruction :=
 Definition translate_Instr (ofs: Z) (i:Instruction) : res instruction :=
   match i with
   |Pmovl_rr rdbits r1bits =>
-    do rd <- encode_ireg_u3 rdbits;
-    do r1 <- encode_ireg_u3 r1bits;
+    do rd <- decode_ireg_u3 rdbits;
+    do r1 <- decode_ireg_u3 r1bits;
     OK (Pmov_rr rd r1)
   |Pmovl_rm a rdbits =>
-    do rd <- encode_ireg_u3 rdbits;
+    do rd <- decode_ireg_u3 rdbits;
     do addr <- translate_AddrE_Addrmode ofs i a;
     OK (Pmovl_rm rd addr)
   |Pmovl_ri rdbits imm32 =>
-    do rdbits <- encode_ireg_u3 rd;
-    do imm32 <- encode_ofs_u32 (Int.intval imm);
+    do rdbits <- decode_ireg_u3 rd;
+    do imm32 <- decode_ofs_u32 (Int.intval imm);
   | _=>Error (msg "unfinished")
   end.
  
